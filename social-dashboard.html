@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SocialPulse — Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="app-layout" id="app">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo-wrap">
+      <div class="logo-icon">📡</div>
+      <div class="logo-text">Social<span>Pulse</span></div>
+    </div>
+
+    <span class="nav-label">Main</span>
+    <div class="nav-item active" onclick="setNav(this)" data-target="section-dashboard">
+      <span class="nav-icon">🏠</span> Dashboard
+    </div>
+    <div class="nav-item" onclick="setNav(this)" data-target="section-monitoring">
+      <span class="nav-icon">📊</span> Monitoring
+      <span class="nav-badge">Live</span>
+    </div>
+    <div class="nav-item" onclick="setNav(this)" data-target="section-trending">
+      <span class="nav-icon">🔥</span> Trending Topics
+    </div>
+    <div class="nav-item" onclick="setNav(this)" data-target="section-ai">
+      <span class="nav-icon">🤖</span> AI Insights
+    </div>
+
+    <span class="nav-label">Content</span>
+    <div class="nav-item" onclick="setNav(this)" data-target="section-news">
+      <span class="nav-icon">📰</span> News Feed
+    </div>
+    <div class="nav-item" onclick="setNav(this)" data-target="section-inbox">
+      <span class="nav-icon">🔔</span> Inbox
+      <span class="nav-badge">7</span>
+    </div>
+
+    <span class="nav-label">System</span>
+    <div class="nav-item" onclick="setNav(this)" data-target="section-calendar">
+      <span class="nav-icon">📅</span> Calendar
+    </div>
+    <div class="nav-item disabled" onclick="setNav(this)" title="Segera hadir">
+      <span class="nav-icon">⚙️</span> Settings
+      <span class="nav-badge" style="background:rgba(255,255,255,0.18);color:rgba(255,255,255,0.6)">Segera</span>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="avatar-sm">A</div>
+      <div>
+        <div class="sidebar-user-name">Admin User</div>
+        <div class="sidebar-user-role">Super Administrator</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Cari topik, hashtag, atau platform…" id="searchInput"/>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" title="Notifikasi">
+        🔔
+        <span class="notif-dot"></span>
+      </button>
+      <button class="icon-btn" title="Refresh Data">🔄</button>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="Toggle tema">
+        <div class="toggle-thumb" id="toggleThumb">☀️</div>
+      </button>
+      <div class="user-pill">
+        <div class="user-pill-avatar">A</div>
+        <span class="user-pill-name">Admin</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── MAIN CONTENT ── */
+  <main class="main">
+
+    <!-- Banner -->
+    <div class="banner" id="section-dashboard">
+      <div class="banner-content">
+        <div class="banner-greeting">📅 <span id="dayPart">Selamat pagi</span>, Admin</div>
+        <div class="banner-title">Selamat Datang di<br>SocialPulse Dashboard</div>
+        <div class="banner-sub">Pantau semua aktivitas sosial media Anda secara real-time</div>
+        <button class="banner-btn">🚀 Lihat Laporan Lengkap →</button>
+      </div>
+      <div class="banner-illustration">
+        <div class="banner-mini-card">
+          <div class="bmc-num" id="mcount">12,847</div>
+          <div class="bmc-label">Total Mentions</div>
+          <div class="bmc-trend">▲ 18.3%</div>
+        </div>
+        <div class="banner-mini-card">
+          <div class="bmc-num">85%</div>
+          <div class="bmc-label">Sentimen Positif</div>
+          <div class="bmc-trend">▲ 4.2%</div>
+        </div>
+        <div class="banner-mini-card">
+          <div class="bmc-num">24</div>
+          <div class="bmc-label">Trending Aktif</div>
+          <div class="bmc-trend">🔥 Hot</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Ticker -->
+    <div class="ai-ticker">
+      <div class="ticker-label">
+        <span class="ticker-live"></span>
+        🤖 AI TICKER
+      </div>
+      <div class="ticker-track">
+        <div class="ticker-inner" id="tickerInner">
+          <span>#PemiluDaerah2026</span> tren meledak di X dengan 580rb cuitan —
+          <span>#BudgetNasional</span> viral di TikTok, engagement 2.3jt —
+          <span>OpenAI</span> luncurkan model baru, topik hangat di YouTube —
+          Harga minyak turun 3.2%, sentimen pasar membaik —
+          <span>#MusicFest2026</span> trending #1 Instagram 6 jam berturut —
+          Gempa M5.2 NTB, situasi aman, masyarakat waspada —
+          <span>#PemiluDaerah2026</span> tren meledak di X dengan 580rb cuitan —
+          <span>#BudgetNasional</span> viral di TikTok, engagement 2.3jt —
+          <span>OpenAI</span> luncurkan model baru, topik hangat di YouTube —
+          Harga minyak turun 3.2%, sentimen pasar membaik —
+          <span>#MusicFest2026</span> trending #1 Instagram 6 jam berturut —
+          Gempa M5.2 NTB, situasi aman, masyarakat waspada —
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="stat-icon si-purple">💬</div>
+          <span class="stat-change up">▲ 18.3%</span>
+        </div>
+        <div class="stat-val">12.8k</div>
+        <div class="stat-label">Total Mentions</div>
+        <div class="mini-bar-chart" id="bar1"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="stat-icon si-pink">❤️</div>
+          <span class="stat-change up">▲ 2.1%</span>
+        </div>
+        <div class="stat-val">4.5%</div>
+        <div class="stat-label">Engagement Rate</div>
+        <div class="mini-bar-chart" id="bar2"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="stat-icon si-cyan">🔥</div>
+          <span class="stat-change up">▲ 6</span>
+        </div>
+        <div class="stat-val">24+</div>
+        <div class="stat-label">Trending Topics Aktif</div>
+        <div class="mini-bar-chart" id="bar3"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="stat-icon si-green">😊</div>
+          <span class="stat-change down">▼ 1.2%</span>
+        </div>
+        <div class="stat-val">85%</div>
+        <div class="stat-label">Skor Sentimen Positif</div>
+        <div class="mini-bar-chart" id="bar4"></div>
+      </div>
+    </div>
+
+    <!-- Platform Monitor Row -->
+    <div id="section-monitoring">
+      <div class="section-header">
+        <div class="section-title">📡 Platform Monitor</div>
+        <button class="see-all">Lihat semua →</button>
+      </div>
+      <div class="platform-row">
+        <div class="plat-card">
+          <div class="plat-icon">📘</div>
+          <div class="plat-name">Facebook</div>
+          <div class="plat-count">3.2k</div>
+          <div class="plat-change up">▲ 12%</div>
+          <div class="plat-bar"><div class="plat-bar-fill" style="width:68%;background:linear-gradient(90deg,#1877f2,#42a5f5)"></div></div>
+        </div>
+        <div class="plat-card">
+          <div class="plat-icon">✖️</div>
+          <div class="plat-name">X (Twitter)</div>
+          <div class="plat-count">4.8k</div>
+          <div class="plat-change up">▲ 31%</div>
+          <div class="plat-bar"><div class="plat-bar-fill" style="width:85%;background:linear-gradient(90deg,#14171a,#657786)"></div></div>
+        </div>
+        <div class="plat-card">
+          <div class="plat-icon">📸</div>
+          <div class="plat-name">Instagram</div>
+          <div class="plat-count">5.1k</div>
+          <div class="plat-change up">▲ 25%</div>
+          <div class="plat-bar"><div class="plat-bar-fill" style="width:90%;background:linear-gradient(90deg,#e1306c,#f77737)"></div></div>
+        </div>
+        <div class="plat-card">
+          <div class="plat-icon">🧵</div>
+          <div class="plat-name">Threads</div>
+          <div class="plat-count">1.4k</div>
+          <div class="plat-change up">▲ 8%</div>
+          <div class="plat-bar"><div class="plat-bar-fill" style="width:32%;background:linear-gradient(90deg,#000,#444)"></div></div>
+        </div>
+        <div class="plat-card">
+          <div class="plat-icon">🎵</div>
+          <div class="plat-name">TikTok</div>
+          <div class="plat-count">6.7k</div>
+          <div class="plat-change up">▲ 44%</div>
+          <div class="plat-bar"><div class="plat-bar-fill" style="width:95%;background:linear-gradient(90deg,#010101,#fe2c55)"></div></div>
+        </div>
+        <div class="plat-card">
+          <div class="plat-icon">▶️</div>
+          <div class="plat-name">YouTube</div>
+          <div class="plat-count">2.9k</div>
+          <div class="plat-change down">▼ 3%</div>
+          <div class="plat-bar"><div class="plat-bar-fill" style="width:55%;background:linear-gradient(90deg,#ff0000,#ff6b6b)"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Distribusi Platform</div>
+            <div class="chart-sub">Percakapan per platform hari ini</div>
+          </div>
+        </div>
+        <canvas id="donutChart" height="220"></canvas>
+        <div class="platform-legend" id="donutLegend"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Volume Mention & Engagement</div>
+            <div class="chart-sub" id="lineChartSub">Performa 7 hari terakhir per platform</div>
+          </div>
+          <div class="chart-period-btns">
+            <button class="period-btn active">7H</button>
+            <button class="period-btn">30H</button>
+            <button class="period-btn">90H</button>
+          </div>
+        </div>
+        <canvas id="lineChart" height="200"></canvas>
+      </div>
+    </div>
+
+    <!-- Trending Topics -->
+    <div id="section-trending">
+      <div class="section-header">
+        <div class="section-title">🔥 Trending Topics Terkini</div>
+        <button class="see-all">Lihat semua →</button>
+      </div>
+      <div class="trending-grid">
+        <div class="trending-card">
+          <div class="trend-rank">#1</div>
+          <div class="trend-info">
+            <div class="trend-tag">#PemiluDaerah2026</div>
+            <div class="trend-count">580,000 cuitan · 2 jam lalu</div>
+          </div>
+          <div class="trend-platform">✖️</div>
+          <div class="trend-up">▲ 234%</div>
+        </div>
+        <div class="trending-card">
+          <div class="trend-rank">#2</div>
+          <div class="trend-info">
+            <div class="trend-tag">#MusicFest2026</div>
+            <div class="trend-count">1.2jt post · 5 jam lalu</div>
+          </div>
+          <div class="trend-platform">📸</div>
+          <div class="trend-up">▲ 180%</div>
+        </div>
+        <div class="trending-card">
+          <div class="trend-rank">#3</div>
+          <div class="trend-info">
+            <div class="trend-tag">#BudgetNasional</div>
+            <div class="trend-count">890k views · 4 jam lalu</div>
+          </div>
+          <div class="trend-platform">🎵</div>
+          <div class="trend-up">▲ 156%</div>
+        </div>
+        <div class="trending-card">
+          <div class="trend-rank">#4</div>
+          <div class="trend-info">
+            <div class="trend-tag">#OpenAI2026</div>
+            <div class="trend-count">430k komentar · 1 jam lalu</div>
+          </div>
+          <div class="trend-platform">▶️</div>
+          <div class="trend-up">▲ 98%</div>
+        </div>
+        <div class="trending-card">
+          <div class="trend-rank">#5</div>
+          <div class="trend-info">
+            <div class="trend-tag">#RupiaDigital</div>
+            <div class="trend-count">215k diskusi · 3 jam lalu</div>
+          </div>
+          <div class="trend-platform">🧵</div>
+          <div class="trend-up">▲ 73%</div>
+        </div>
+        <div class="trending-card">
+          <div class="trend-rank">#6</div>
+          <div class="trend-info">
+            <div class="trend-tag">#GempaJakarta</div>
+            <div class="trend-count">1.8jt reaksi · 30 mnt lalu</div>
+          </div>
+          <div class="trend-platform">📘</div>
+          <div class="trend-up">▲ 512%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Viral Posts / Alerts -->
+    <div id="section-inbox">
+      <div class="section-header">
+        <div class="section-title">⚡ Viral Posts & Alerts Terkini</div>
+        <button class="see-all">Lihat semua →</button>
+      </div>
+      <div class="viral-grid">
+        <div class="viral-card">
+          <div class="viral-top">
+            <div class="vc-avatar" style="background:linear-gradient(135deg,#7c3aed,#ec4899)">B</div>
+            <div>
+              <div class="vc-name">@beritaviralid</div>
+              <div class="vc-handle">instagram.com</div>
+            </div>
+            <div class="vc-platform">📸</div>
+          </div>
+          <div class="vc-content">Festival musik terbesar tahun ini buka pendaftaran! 50+ artis lokal dan internasional siap memukau penonton. Daftarkan diri sebelum kehabisan…</div>
+          <div class="vc-meta">
+            <div class="vc-metric">❤️ 48.2k</div>
+            <div class="vc-metric">💬 3.1k</div>
+            <span class="sentiment-chip s-positive">😊 Positif</span>
+            <div class="vc-time">14 mnt lalu</div>
+          </div>
+        </div>
+        <div class="viral-card">
+          <div class="viral-top">
+            <div class="vc-avatar" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">T</div>
+            <div>
+              <div class="vc-name">@techreviewid</div>
+              <div class="vc-handle">tiktok.com</div>
+            </div>
+            <div class="vc-platform">🎵</div>
+          </div>
+          <div class="vc-content">Review jujur smartphone terbaru yang BIKIN SYOK! Spek dewa, harga anak kost. Gak nyangka bisa sebagus ini. Langsung trending #1…</div>
+          <div class="vc-meta">
+            <div class="vc-metric">❤️ 234k</div>
+            <div class="vc-metric">💬 12k</div>
+            <span class="sentiment-chip s-positive">😊 Positif</span>
+            <div class="vc-time">32 mnt lalu</div>
+          </div>
+        </div>
+        <div class="viral-card">
+          <div class="viral-top">
+            <div class="vc-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">P</div>
+            <div>
+              <div class="vc-name">@politikpanas</div>
+              <div class="vc-handle">twitter.com</div>
+            </div>
+            <div class="vc-platform">✖️</div>
+          </div>
+          <div class="vc-content">🚨 BREAKING: Hasil survei terbaru pilkada menunjukkan pergeseran signifikan. Kandidat incumbent tertinggal 8 poin. Thread lengkap di bawah…</div>
+          <div class="vc-meta">
+            <div class="vc-metric">❤️ 18.7k</div>
+            <div class="vc-metric">💬 8.4k</div>
+            <span class="sentiment-chip s-neutral">😐 Netral</span>
+            <div class="vc-time">1 jam lalu</div>
+          </div>
+        </div>
+        <div class="viral-card">
+          <div class="viral-top">
+            <div class="vc-avatar" style="background:linear-gradient(135deg,#10b981,#3b82f6)">Y</div>
+            <div>
+              <div class="vc-name">@ytcreatorid</div>
+              <div class="vc-handle">youtube.com</div>
+            </div>
+            <div class="vc-platform">▶️</div>
+          </div>
+          <div class="vc-content">AI bisa buat musik sendiri sekarang?! Gue test 5 platform AI musik terbaru — hasilnya bikin geleng kepala. Nonton sampai habis ya…</div>
+          <div class="vc-meta">
+            <div class="vc-metric">👁️ 1.2jt</div>
+            <div class="vc-metric">💬 4.8k</div>
+            <span class="sentiment-chip s-positive">😊 Positif</span>
+            <div class="vc-time">2 jam lalu</div>
+          </div>
+        </div>
+        <div class="viral-card">
+          <div class="viral-top">
+            <div class="vc-avatar" style="background:linear-gradient(135deg,#ef4444,#f97316)">K</div>
+            <div>
+              <div class="vc-name">@kabargempa</div>
+              <div class="vc-handle">threads.net</div>
+            </div>
+            <div class="vc-platform">🧵</div>
+          </div>
+          <div class="vc-content">⚠️ ALERT: Gempa M5.2 mengguncang NTB pukul 14:32 WIB. BMKG: tidak berpotensi tsunami. Warga diminta tetap tenang dan waspada…</div>
+          <div class="vc-meta">
+            <div class="vc-metric">❤️ 9.2k</div>
+            <div class="vc-metric">💬 2.1k</div>
+            <span class="sentiment-chip s-negative">😟 Negatif</span>
+            <div class="vc-time">28 mnt lalu</div>
+          </div>
+        </div>
+        <div class="viral-card">
+          <div class="viral-top">
+            <div class="vc-avatar" style="background:linear-gradient(135deg,#1877f2,#0d65c8)">F</div>
+            <div>
+              <div class="vc-name">@foodieindonesia</div>
+              <div class="vc-handle">facebook.com</div>
+            </div>
+            <div class="vc-platform">📘</div>
+          </div>
+          <div class="vc-content">Kuliner nusantara masuk daftar 50 makanan terbaik dunia versi CNN Travel! Rendang, sate, dan nasi goreng makin mendunia! Bangga jadi orang Indonesia…</div>
+          <div class="vc-meta">
+            <div class="vc-metric">❤️ 87k</div>
+            <div class="vc-metric">💬 6.3k</div>
+            <span class="sentiment-chip s-positive">😊 Positif</span>
+            <div class="vc-time">3 jam lalu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Insights Panel (glass) -->
+    <div class="glass-panel" id="section-ai">
+      <div class="section-header">
+        <div class="section-title">🤖 AI Insights & Rekomendasi</div>
+        <span class="ai-badge">AI-POWERED</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px" id="aiInsights">
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;">
+          <div style="font-size:11px;font-weight:700;color:var(--accent1);margin-bottom:6px;">📈 ANALISIS SENTIMEN</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;">Sentimen Hari Ini: Dominan Positif</div>
+          <div style="display:flex;gap:6px;margin-bottom:10px;">
+            <div style="flex:0.85;height:8px;background:linear-gradient(90deg,#10b981,#34d399);border-radius:4px;"></div>
+            <div style="flex:0.10;height:8px;background:#f59e0b;border-radius:4px;"></div>
+            <div style="flex:0.05;height:8px;background:#ef4444;border-radius:4px;"></div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);">😊 85% Positif &nbsp; 😐 10% Netral &nbsp; 😟 5% Negatif</div>
+          <div style="font-size:11.5px;color:var(--text2);margin-top:10px;line-height:1.5;">Mayoritas percakapan bersifat positif. Topik kuliner dan musik mendominasi sentimen baik.</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;">
+          <div style="font-size:11px;font-weight:700;color:var(--accent2);margin-bottom:6px;">🎯 REKOMENDASI KONTEN</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;">Konten dengan Potensi Viral Tinggi</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);">
+              <span style="background:rgba(124,58,237,0.15);color:var(--accent1);padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;">HOT</span>
+              Review produk teknologi terbaru
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);">
+              <span style="background:rgba(236,72,153,0.15);color:var(--accent2);padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;">🔥</span>
+              Konten kuliner nusantara
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);">
+              <span style="background:rgba(6,182,212,0.15);color:#06b6d4;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;">⬆️</span>
+              Thread analisis musik festival
+            </div>
+          </div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;">
+          <div style="font-size:11px;font-weight:700;color:#10b981;margin-bottom:6px;">⚡ ALERT PENTING</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;">3 Notifikasi Memerlukan Perhatian</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--text2);">
+              <span>🔴</span> Lonjakan mention negatif di topik #Gempa (↑512%)
+            </div>
+            <div style="display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--text2);">
+              <span>🟡</span> Engagement rate TikTok turun 8% dari baseline
+            </div>
+            <div style="display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--text2);">
+              <span>🟢</span> Instagram Stories performa terbaik minggu ini
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main><!-- /main -->
+
+  <!-- ── RIGHT PANEL ── -->
+  <aside class="right-panel">
+    <!-- Profile Card -->
+    <div class="profile-card">
+      <div class="profile-avatar">A</div>
+      <div class="profile-name">Admin Utama</div>
+      <div class="profile-role">Social Media Strategist</div>
+      <div class="profile-stats">
+        <div class="ps-item">
+          <div class="ps-val">6</div>
+          <div class="ps-label">Platform</div>
+        </div>
+        <div class="ps-item">
+          <div class="ps-val">24</div>
+          <div class="ps-label">Trending</div>
+        </div>
+        <div class="ps-item">
+          <div class="ps-val">12k</div>
+          <div class="ps-label">Mentions</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calendar -->
+    <div class="cal-widget" id="section-calendar">
+      <div class="cal-header">
+        <button class="cal-nav" onclick="changeMonth(-1)">‹</button>
+        <div class="cal-month" id="calMonth"></div>
+        <button class="cal-nav" onclick="changeMonth(1)">›</button>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+
+    <!-- Schedule -->
+    <div>
+      <div class="section-header" style="margin-bottom:10px;">
+        <div style="font-size:14px;font-weight:700;color:var(--text);">📋 Jadwal Hari Ini</div>
+      </div>
+      <div class="schedule-list">
+        <div class="sched-item">
+          <div class="sched-dot" style="background:#7c3aed;"></div>
+          <div class="sched-text">Pantau Trending Topik</div>
+          <div class="sched-time">08:00</div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-dot" style="background:#ec4899;"></div>
+          <div class="sched-text">Posting Konten Baru</div>
+          <div class="sched-time">10:30</div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-dot" style="background:#06b6d4;"></div>
+          <div class="sched-text">Analisis Sentimen AI</div>
+          <div class="sched-time">14:00</div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-dot" style="background:#10b981;"></div>
+          <div class="sched-text">Laporan Mingguan</div>
+          <div class="sched-time">16:00</div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-dot" style="background:#f59e0b;"></div>
+          <div class="sched-text">Review Strategi Konten</div>
+          <div class="sched-time">17:30</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI News Panel -->
+    <div class="ai-news-panel" id="section-news">
+      <div class="an-header">
+        <div class="an-title">📡 AI News Feed</div>
+        <span class="ai-badge">LLM</span>
+      </div>
+      <div class="ai-news-items" id="aiNewsFeed">
+        <div class="ai-news-item">
+          <span class="ani-cat cat-lokal">🇮🇩 LOKAL</span>
+          <div class="ani-headline">Pemerintah Siapkan Anggaran Digital 2026 Senilai Rp 48 Triliun</div>
+          <div class="ani-summary">Fokus pada transformasi digital layanan publik, infrastruktur data center nasional, dan peningkatan literasi digital masyarakat pedesaan.</div>
+          <div class="ani-meta">
+            <span class="ani-sentiment s-positive">😊 Positif</span>
+            <span class="ani-time">5 mnt lalu</span>
+          </div>
+        </div>
+        <div class="ai-news-item">
+          <span class="ani-cat cat-intl">🌍 INTERNASIONAL</span>
+          <div class="ani-headline">OpenAI Rilis Model Baru yang Diklaim 10x Lebih Cerdas dari GPT-4</div>
+          <div class="ani-summary">Model terbaru mampu memproses konteks 2 juta token dan mendukung multimodal secara native, mengancam dominasi pesaing di pasar AI.</div>
+          <div class="ani-meta">
+            <span class="ani-sentiment s-positive">😊 Positif</span>
+            <span class="ani-time">22 mnt lalu</span>
+          </div>
+        </div>
+        <div class="ai-news-item">
+          <span class="ani-cat cat-lokal">🇮🇩 LOKAL</span>
+          <div class="ani-headline">Gempa M5.2 Guncang NTB, BMKG Pastikan Tidak Ada Potensi Tsunami</div>
+          <div class="ani-summary">Badan Meteorologi melaporkan pusat gempa berada di kedalaman 12km. Beberapa bangunan dilaporkan retak, tidak ada korban jiwa.</div>
+          <div class="ani-meta">
+            <span class="ani-sentiment s-negative">😟 Negatif</span>
+            <span class="ani-time">31 mnt lalu</span>
+          </div>
+        </div>
+        <div class="ai-news-item">
+          <span class="ani-cat cat-tech">💻 TEKNOLOGI</span>
+          <div class="ani-headline">Apple Vision Pro 2 Hadir dengan Harga Lebih Terjangkau di Asia Pasifik</div>
+          <div class="ani-summary">Perangkat AR terbaru Apple kini resmi tersedia di Indonesia dengan harga mulai dari Rp 45 juta, ditargetkan untuk segmen profesional kreatif.</div>
+          <div class="ani-meta">
+            <span class="ani-sentiment s-neutral">😐 Netral</span>
+            <span class="ani-time">1 jam lalu</span>
+          </div>
+        </div>
+        <div class="ai-news-item">
+          <span class="ani-cat cat-intl">🌍 INTERNASIONAL</span>
+          <div class="ani-headline">Harga Minyak Dunia Turun 3.2%, Brent Crude di Level $74/barel</div>
+          <div class="ani-summary">Penurunan dipicu meningkatnya pasokan dari OPEC+ dan melemahnya permintaan dari Tiongkok. Analis prediksi stabilisasi di Q3 2026.</div>
+          <div class="ani-meta">
+            <span class="ani-sentiment s-neutral">😐 Netral</span>
+            <span class="ani-time">2 jam lalu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+</div><!-- /app-layout -->
+
+<script src="script.js"></script>
+</body>
+</html>

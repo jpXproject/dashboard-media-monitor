@@ -1,0 +1,21 @@
+# Node
+node_modules/
+
+# Database (dibuat otomatis saat server pertama jalan)
+server/*.db
+server/*.db-journal
+server/*.db-wal
+server/*.db-shm
+
+# Log
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

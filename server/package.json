@@ -1,0 +1,18 @@
+{
+  "name": "socialpulse-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Backend SocialPulse: serve dashboard + SSE realtime + SQLite",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "express": "^4.22.2"
+  }
+}
