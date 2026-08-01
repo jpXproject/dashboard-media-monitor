@@ -644,6 +644,13 @@ body {
   padding: 20px;
 }
 
+/* ── AI INSIGHTS GRID (responsive, auto-collapse) ── */
+.ai-insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
 /* ── PLATFORM MONITOR ── */
 .platform-row {
   display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;
@@ -708,12 +715,23 @@ body {
   .banner-illustration { display: none; }
   .platform-row { grid-template-columns: repeat(2, 1fr); }
   .trending-grid { grid-template-columns: 1fr; }
-  .banner { padding: 20px 22px; }
+  .banner { padding: 20px 22px; flex-wrap: wrap; gap: 16px; }
   .banner-title { font-size: 20px; }
+  .banner-btn { white-space: normal; }
   .main { padding: 16px; }
+  .vc-meta { flex-wrap: wrap; row-gap: 6px; }
+  .vc-time { margin-left: 0; }
+  .ai-ticker { padding: 10px 12px; }
+  .header { padding: 0 14px; gap: 10px; }
+  .search-wrap { max-width: none; min-width: 0; }
 }
 @media (max-width: 480px) {
   .stats-grid { grid-template-columns: 1fr; }
+  .platform-row { grid-template-columns: 1fr; }
+  .user-pill-name { display: none; }
+  .search-wrap { min-width: 0; }
+  .trending-card { flex-wrap: wrap; }
+  .trend-up { margin-left: auto; }
 }
 
 /* ── ANIMATIONS ── */
