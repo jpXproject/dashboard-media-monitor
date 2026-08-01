@@ -61,6 +61,17 @@ Server berjalan di **http://localhost:3000**:
 | `/api/stats`          | Snapshot data (REST)               |
 | `/api/stream`         | Aliran data real-time (SSE)        |
 
+## 🌐 GitHub Pages (pratinjau statis)
+
+Dashboard juga bisa dilihat di **GitHub Pages** tanpa backend (mode simulasi lokal di `script.js`):
+
+```
+https://jpXproject.github.io/dashboard-media-monitor/
+```
+
+- Halaman utama `index.html` mengarahkan ke `social-dashboard.html`.
+- Data statistik di Pages menggunakan **simulasi lokal** (angka mentions naik otomatis); SSE realtime hanya aktif saat dijalankan lewat server lokal (`localhost`).
+
 ## 🧪 Catatan Data
 
 - Data di-generate secara mock oleh `server/mock.js` dengan simulasi polling setiap ±30 detik.

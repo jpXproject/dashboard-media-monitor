@@ -306,8 +306,11 @@ localSimTimer = setInterval(() => {
 
 // ── SSE REALTIME (backend) ──
 (function initSSE() {
-  // Hanya aktif saat di-serve oleh backend (http), bukan dibuka via file://
+  // Hanya aktif saat di-serve oleh backend lokal (http://localhost),
+  // bukan dibuka via file:// atau di hosting statis seperti GitHub Pages.
   if (!window.EventSource || location.protocol === 'file:') return;
+  const host = location.hostname;
+  if (host !== 'localhost' && host !== '127.0.0.1') return;
 
   const src = new EventSource('/api/stream');
   let liveOn = false;

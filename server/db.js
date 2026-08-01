@@ -56,6 +56,9 @@ export function initDb() {
   if (c === 0) seed();
 }
 
+// Pastikan skema & seed siap SEBELUM statement prepare di bawah dijalankan
+initDb();
+
 // ── SEED (data awal sama dengan yang tampil di dashboard) ──
 function seed() {
   const insStat = db.prepare('INSERT INTO stats (label, value, change_text, change_class) VALUES (?,?,?,?)');
